@@ -2,8 +2,9 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import { authFetchData } from "@/lib/ApiFunctions";
-import SearchUser from "./SearchUser";
+import { authCreateData, authFetchData } from "@/lib/ApiFunctions";
+import { Button } from "./ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 const SearchBox = ({ toast }) => {
   const [search, setSearch] = useState("");
@@ -32,6 +33,38 @@ const SearchBox = ({ toast }) => {
     );
     if (response.success) {
       setFilterdUsers(response.data.users);
+    } else {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: response.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleSendRequest = async (friendId) => {
+    const response = await authCreateData("request/send", { friendId });
+    if (response.message) {
+      toast({
+        description: response.message,
+      });
+      setUsers(users.filter((user) => user._id !== friendId));
+      setFilterdUsers(users.filter((user) => user._id !== friendId));
+    } else {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: response.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleCancleRequest = async (recieverId) => {
+    const response = await authCreateData("request/cancle", { recieverId });
+    if (response.message) {
+      toast({
+        description: response.message,
+      });
     } else {
       toast({
         title: "Uh oh! Something went wrong.",
@@ -71,10 +104,89 @@ const SearchBox = ({ toast }) => {
         <span className="border-b"></span>
 
         <div className="h-[50vh] mt-4 overflow-y-auto no-scrollbar">
-          <SearchUser
-            toast={toast}
-            users={filterdUsers.length > 0 ? filterdUsers : users}
-          />
+          {filterdUsers.length > 0
+            ? filterdUsers.length > 0 &&
+              filterdUsers.map((user, i) => {
+                return (
+                  <div
+                    className="flex items-center justify-between m-2 relative hover:bg-primary-foreground py-4 px-4 rounded-lg"
+                    key={i}
+                  >
+                    <div className="flex items-center">
+                      <Avatar>
+                        <AvatarImage
+                          className="size-12 rounded-full"
+                          src={user.avatar}
+                        />
+                        <AvatarFallback className="bg-muted">
+                          {user.fullname.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="ml-4">
+                        <p className="leading-2 font-jost [&:not(:first-child)]:mt-6 font-semibold">
+                          {user.fullname}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {user.username}
+                        </p>
+                      </div>
+                    </div>
+                    {!user.isSent ? (
+                      <Button onClick={() => handleSendRequest(user._id)}>
+                        Follow
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleCancleRequest(user._id)}
+                      >
+                        Requested
+                      </Button>
+                    )}
+                  </div>
+                );
+              })
+            : users.length > 0 &&
+              users.map((user, i) => {
+                return (
+                  <div
+                    className="flex items-center justify-between m-2 relative hover:bg-primary-foreground py-4 px-4 rounded-lg"
+                    key={i}
+                  >
+                    <div className="flex items-center">
+                      <Avatar>
+                        <AvatarImage
+                          className="size-12 rounded-full"
+                          src={user.avatar}
+                        />
+                        <AvatarFallback className="bg-muted">
+                          {user.fullname.slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="ml-4">
+                        <p className="leading-2 font-jost [&:not(:first-child)]:mt-6 font-semibold">
+                          {user.fullname}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {user.username}
+                        </p>
+                      </div>
+                    </div>
+                    {!user.isSent ? (
+                      <Button onClick={() => handleSendRequest(user._id)}>
+                        Follow
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleCancleRequest(user._id)}
+                      >
+                        Requested
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
         </div>
       </div>
     </>
