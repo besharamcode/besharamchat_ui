@@ -61,7 +61,7 @@ const ChatList = () => {
                     }`}
                   >
                     {chat.lastMessage && chat.lastMessage.message.length > 40
-                      ? chat.lastMessage.message.slice(0, 40) + "..."
+                      ? chat.lastMessage.message.slice(0, 40)
                       : chat.lastMessage.message}
                   </p>
                 </div>
