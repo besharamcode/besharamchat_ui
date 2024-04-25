@@ -1,17 +1,12 @@
 /* eslint-disable react/prop-types */
-import {
-  BellIcon,
-  HamburgerMenuIcon,
-  PersonIcon,
-  PlusIcon,
-} from "@radix-ui/react-icons";
+import { BellIcon, HamburgerMenuIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
 
 const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
-  const {user} = useSelector((store) => store.user);
+  const { user } = useSelector((store) => store.user);
   return (
     <header
       id="header"
@@ -22,15 +17,12 @@ const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
           Besharam Chat
         </p>
       </div>
-      <nav>
+      <nav className="md:block hidden">
         <ul className="flex justify-center items-center gap-3">
           <li className="size-8  flex justify-center items-center">
             <Button onClick={toggleSearchBox}>
               <PlusIcon className="size-6" />
             </Button>
-          </li>
-          <li className="size-8 flex justify-center items-center mr-2">
-            <PersonIcon className="size-6" />
           </li>
           <li className="size-8 flex justify-center items-center mr-2 relative">
             <Button onClick={toggleNotificationBox}>
@@ -50,17 +42,17 @@ const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
             </Link>
           </li>
         </ul>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="sm:hidden"
-          onClick={() => {
-            console.log("clicked");
-          }}
-        >
-          <HamburgerMenuIcon className="siz-5" />
-        </Button>
       </nav>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="md:hidden"
+        onClick={() => {
+          console.log("clicked");
+        }}
+      >
+        <HamburgerMenuIcon className="siz-5" />
+      </Button>
     </header>
   );
 };

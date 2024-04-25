@@ -12,6 +12,7 @@ import { useState } from "react";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
+import ChatContainer from "./components/ChatContainer";
 
 function App() {
   const { toast } = useToast();
@@ -59,6 +60,14 @@ function App() {
                 element={
                   <ProtectedRoute toast={toast} loading={setLoading}>
                     <Home toast={toast} loading={setLoading} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat/:chatId"
+                element={
+                  <ProtectedRoute toast={toast} loading={setLoading}>
+                    <ChatContainer toast={toast} loading={setLoading} />
                   </ProtectedRoute>
                 }
               />

@@ -9,9 +9,11 @@ import { authCreateData, authFetchData } from "@/lib/ApiFunctions";
 import { useSelector } from "react-redux";
 import { toast } from "./ui/use-toast";
 import useSocket from "@/hooks/useSocket";
+import { useParams } from "react-router-dom";
 
 const ChatContainer = () => {
   const { getChat } = useChat();
+  const { chatId } = useParams();
   const { socket } = useSocket();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -26,7 +28,10 @@ const ChatContainer = () => {
       chatId: chat.chatId,
     });
     if (response.success) {
-      setMessages([...messages, { message:response.data.message, sender: true }, ]);
+      setMessages([
+        ...messages,
+        { message: response.data.message, sender: true },
+      ]);
       document.getElementById("message").value = "";
     } else {
       toast({
@@ -79,7 +84,9 @@ const ChatContainer = () => {
   return (
     <div
       id="chat-container"
-      className="pt-1 pb-3 px-2 rounded-lg overflow-hidden h-full relative"
+      className={`pt-1 pb-3 px-2 rounded-lg overflow-hidden h-full ${
+        chatId ? "" : "hidden"
+      }  md:block relative`}
     >
       {chat ? (
         <div className="bg-muted size-full rounded-lg relative overflow-y-scroll no-scrollbar">

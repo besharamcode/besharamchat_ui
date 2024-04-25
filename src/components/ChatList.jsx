@@ -3,10 +3,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useEffect, useState } from "react";
 import { setChat } from "@/redux/slices/chat";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const ChatList = () => {
   const [chats, setChats] = useState(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const fetchChats = async () => {
     const response = await authFetchData("chat/fetchchats");
@@ -19,6 +21,9 @@ const ChatList = () => {
     if (e.target.dataset.id) {
       const chat = chats.find((chat) => chat.chatId === e.target.dataset.id);
       dispatch(setChat(chat));
+      if (window.innerWidth <= 768) {
+        navigate(`/chat/${chat.chatId}`);
+      }
     }
   };
 
@@ -29,13 +34,14 @@ const ChatList = () => {
   return (
     <div
       id="chat-list"
-      className="w-[30rem] border-r-2 pt-1 pb-3 px-2 bg-muted rounded-lg overflow-y-scroll no-scrollbar"
+      className="md:w-[30rem] w-full  border-r-2 pt-1 pb-3 px-2 bg-muted rounded-lg overflow-y-scroll no-scrollbar"
       onClick={(e) => handleOpenChat(e)}
     >
       {chats !== null
         ? chats.map((chat, i) => {
             return (
               <div
+                to={`/chat/${chat.chatId}`}
                 className="flex items-center py-2 m-2 mt-3 relative hover:bg-primary-foreground px-4 rounded-lg z-10"
                 key={i}
                 data-id={chat.chatId}
@@ -52,9 +58,7 @@ const ChatList = () => {
                   </Avatar>
                 </div>
                 <div data-id={chat.chatId} className="ml-4">
-                  <p className="font-jost font-semibold">
-                    {chat.fullname}
-                  </p>
+                  <p className="font-jost font-semibold">{chat.fullname}</p>
                   <p className={`text-sm font-jost text-gray-700`}>
                     {chat.lastMessage && chat.lastMessage?.message.length > 40
                       ? chat.lastMessage?.message.slice(0, 40)
