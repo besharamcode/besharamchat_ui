@@ -60,8 +60,8 @@ const ChatList = () => {
                       !chat.seen ? "font-semibold" : "font-normal"
                     }`}
                   >
-                    {chat.lastMessage && chat.lastMessage.message.length > 25
-                      ? chat.lastMessage.message.slice(0, 25) + "..."
+                    {chat.lastMessage && chat.lastMessage.message.length > 40
+                      ? chat.lastMessage.message.slice(0, 40) + "..."
                       : chat.lastMessage.message}
                   </p>
                 </div>
