@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   chat: null,
+  chatLastMessage: null,
 };
 
 const ChatSlice = createSlice({
@@ -10,6 +11,9 @@ const ChatSlice = createSlice({
   reducers: {
     setChat: (state, action) => {
       state.chat = action.payload;
+    },
+    setChatLastMessage: (state, action) => {
+      state.chatLastMessage = action.payload;
     },
   },
 });
