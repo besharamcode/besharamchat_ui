@@ -41,8 +41,11 @@ const ChatList = () => {
                 data-id={chat.chatId}
               >
                 <div data-id={chat.chatId}>
-                  <Avatar className="size-12 rounded-full p-1">
-                    <AvatarImage src={chat.avatar} />
+                  <Avatar>
+                    <AvatarImage
+                      className="size-12 rounded-full"
+                      src={chat.avatar}
+                    />
                     <AvatarFallback className="">
                       {chat.fullname.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
