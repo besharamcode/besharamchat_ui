@@ -5,9 +5,9 @@ import { authCreateData } from "@/lib/ApiFunctions";
 
 const SearchUser = ({ users, toast }) => {
   const handleSendRequest = async (friendId) => {
-    console.log(friendId)
     const response = await authCreateData("request/send", { friendId });
     if (response.message) {
+      
       toast({
         description: response.message,
       });

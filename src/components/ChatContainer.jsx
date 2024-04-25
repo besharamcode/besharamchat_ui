@@ -13,7 +13,6 @@ import useSocket from "@/hooks/useSocket";
 const ChatContainer = () => {
   const { getChat } = useChat();
   const { socket } = useSocket();
-  const [typing, setTyping] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
@@ -77,17 +76,6 @@ const ChatContainer = () => {
     getmessages();
   }, [chat, getmessages]);
 
-  useEffect(() => {
-    let debounce;
-    debounce = setTimeout(() => {
-      setMessage(typing);
-    }, 500);
-
-    return () => {
-      clearTimeout(debounce);
-    };
-  }, [typing]);
-
   return (
     <div
       id="chat-container"
@@ -147,7 +135,7 @@ const ChatContainer = () => {
               <Input
                 type="text"
                 placeholder="Message..."
-                onChange={(e) => setTyping(e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
                 id="message"
               />
 
