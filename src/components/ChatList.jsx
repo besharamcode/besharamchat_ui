@@ -36,7 +36,7 @@ const ChatList = () => {
         ? chats.map((chat, i) => {
             return (
               <div
-                className="flex items-center m-2 mt-3 relative hover:bg-primary-foreground px-4 rounded-lg z-10"
+                className="flex items-center py-2 m-2 mt-3 relative hover:bg-primary-foreground px-4 rounded-lg z-10"
                 key={i}
                 data-id={chat.chatId}
               >
@@ -52,7 +52,7 @@ const ChatList = () => {
                   </Avatar>
                 </div>
                 <div data-id={chat.chatId} className="ml-4">
-                  <p className="leading-7 font-jost [&:not(:first-child)]:mt-6 font-semibold">
+                  <p className="font-jost font-semibold">
                     {chat.fullname}
                   </p>
                   <p className={`text-sm font-jost text-gray-700`}>
