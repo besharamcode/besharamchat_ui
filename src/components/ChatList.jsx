@@ -36,7 +36,7 @@ const ChatList = () => {
         ? chats.map((chat, i) => {
             return (
               <div
-                className="flex items-center m-2 relative hover:bg-primary-foreground px-4 rounded-lg z-10"
+                className="flex items-center m-2 mt-3 relative hover:bg-primary-foreground px-4 rounded-lg z-10"
                 key={i}
                 data-id={chat.chatId}
               >
@@ -55,11 +55,7 @@ const ChatList = () => {
                   <p className="leading-7 font-jost [&:not(:first-child)]:mt-6 font-semibold">
                     {chat.fullname}
                   </p>
-                  <p
-                    className={`text-sm font-jost ${
-                      !chat.seen ? "font-semibold" : "font-normal"
-                    }`}
-                  >
+                  <p className={`text-sm font-jost text-gray-700`}>
                     {chat.lastMessage && chat.lastMessage.message.length > 40
                       ? chat.lastMessage.message.slice(0, 40)
                       : chat.lastMessage.message}
