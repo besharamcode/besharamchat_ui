@@ -56,9 +56,9 @@ const ChatList = () => {
                     {chat.fullname}
                   </p>
                   <p className={`text-sm font-jost text-gray-700`}>
-                    {chat.lastMessage && chat.lastMessage.message.length > 40
-                      ? chat.lastMessage.message.slice(0, 40)
-                      : chat.lastMessage.message}
+                    {chat.lastMessage && chat.lastMessage?.message.length > 40
+                      ? chat.lastMessage?.message.slice(0, 40)
+                      : chat.lastMessage?.message}
                   </p>
                 </div>
                 {/* {!chat.seen ? (
