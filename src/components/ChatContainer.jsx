@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 
 const ChatContainer = () => {
   const { user } = useSelector((store) => store.user);
-  const { chat, chats, setChatFunc } = useChat();
+  const { chat, setChatFunc } = useChat();
   const { chatId } = useParams();
   const { socket } = useSocket();
   const [message, setMessage] = useState("");
@@ -80,10 +80,22 @@ const ChatContainer = () => {
     getmessages();
   }, [chat, getmessages]);
 
+  const fetchChat = async () => {
+    const response = await authFetchData(`chat/getchat/${chatId}`);
+    if (response.success) {
+      setChatFunc(response.data.chat);
+    } else {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: response.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   useEffect(() => {
-    if (chatId) {
-      const chat = chats.find((chat) => chat.chatId === chatId);
-      setChatFunc(chat);
+    if (chatId && window.innerWidth <= 768) {
+      fetchChat();
     }
   }, [chatId]);
 
