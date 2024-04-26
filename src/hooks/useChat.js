@@ -1,12 +1,20 @@
-import { useSelector } from "react-redux";
+import { setChat, setChats } from "@/redux/slices/chat";
+import { useDispatch, useSelector } from "react-redux";
 
 const useChat = () => {
-  const { chat } = useSelector((state) => state.chat);
+  const dispatch = useDispatch();
 
-  const getChat = () => {
-    return chat;
+  const { chat, chats } = useSelector((state) => state.chat);
+
+  const setChatsFunc = (chats) => {
+    dispatch(setChats(chats));
   };
-  return { getChat };
+
+  const setChatFunc = (chat) => {
+    dispatch(setChat(chat));
+  };
+
+  return { chat, setChatsFunc, setChatFunc, chats };
 };
 
 export default useChat;

@@ -1,26 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { authFetchData } from "@/lib/ApiFunctions";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { useEffect, useState } from "react";
-import { setChat } from "@/redux/slices/chat";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useChat from "../hooks/useChat";
 
 const ChatList = () => {
-  const [chats, setChats] = useState(null);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { setChatFunc, chats, setChatsFunc } = useChat();
 
-  const fetchChats = async () => {
+  const fetchChats = useCallback(async () => {
     const response = await authFetchData("chat/fetchchats");
     if (response.success) {
-      setChats(response.data.chats);
+      setChatsFunc(response.data.chats);
     }
-  };
+  }, []);
 
   const handleOpenChat = (e) => {
     if (e.target.dataset.id) {
       const chat = chats.find((chat) => chat.chatId === e.target.dataset.id);
-      dispatch(setChat(chat));
+      setChatFunc(chat);
       if (window.innerWidth <= 768) {
         navigate(`/chat/${chat.chatId}`);
       }
@@ -29,7 +28,7 @@ const ChatList = () => {
 
   useEffect(() => {
     fetchChats();
-  }, []);
+  }, [fetchChats]);
 
   return (
     <div

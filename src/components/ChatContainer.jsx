@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { ArrowTopRightIcon, DotsVerticalIcon } from "@radix-ui/react-icons";
 import { useCallback, useEffect, useState } from "react";
@@ -12,14 +12,13 @@ import useSocket from "@/hooks/useSocket";
 import { useParams } from "react-router-dom";
 
 const ChatContainer = () => {
-  const { getChat } = useChat();
+  const { user } = useSelector((store) => store.user);
+  const { chat, chats, setChatFunc } = useChat();
   const { chatId } = useParams();
   const { socket } = useSocket();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [page, setPage] = useState(1);
-  const { user } = useSelector((store) => store.user);
-  const chat = getChat();
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -80,6 +79,13 @@ const ChatContainer = () => {
   useEffect(() => {
     getmessages();
   }, [chat, getmessages]);
+
+  useEffect(() => {
+    if (chatId) {
+      const chat = chats.find((chat) => chat.chatId === chatId);
+      setChatFunc(chat);
+    }
+  }, [chatId]);
 
   return (
     <div
