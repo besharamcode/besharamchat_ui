@@ -13,6 +13,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import ChatContainer from "./components/ChatContainer";
+import Notification from "./components/Notification";
+import SearchBox from "./components/SearchBox";
 
 function App() {
   const { toast } = useToast();
@@ -25,6 +27,14 @@ function App() {
       ) : (
         <>
           <Toaster />
+          {window.location.pathname.startsWith("/home") ||
+            window.location.pathname.startsWith("/profile") ||
+            (window.location.pathname.startsWith("/chat") && (
+              <>
+                <Notification toast={toast} />
+                <SearchBox toast={toast} />
+              </>
+            ))}
           <BrowserRouter>
             <Routes>
               <Route

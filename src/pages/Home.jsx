@@ -22,8 +22,6 @@ const Home = ({ user, toast, loading }) => {
   return (
     <>
       <main id="main" className="flex min-h-full no-scrollbar">
-        <Notification toast={toast}/>
-        <SearchBox toast={toast} />
         <ChatList />
         <ChatContainer toast={toast} />
       </main>

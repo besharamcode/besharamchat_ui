@@ -88,7 +88,7 @@ const SearchBox = ({ toast }) => {
   return (
     <>
       <div
-        className="z-50 sm:w-1/2 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-secondary shadow-md p-4 hidden pop-box"
+        className="z-50 md:w-1/2 sm:w-3/4 w-11/12  absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-secondary shadow-md p-4 hidden pop-box"
         id="search-box"
       >
         <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight font-jost text-center mb-2">

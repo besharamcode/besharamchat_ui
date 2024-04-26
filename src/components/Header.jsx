@@ -4,6 +4,13 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSelector } from "react-redux";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
   const { user } = useSelector((store) => store.user);
@@ -43,16 +50,38 @@ const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
           </li>
         </ul>
       </nav>
-      <Button
-        variant="ghost"
-        size="icon"
-        className="md:hidden"
-        onClick={() => {
-          console.log("clicked");
-        }}
-      >
-        <HamburgerMenuIcon className="siz-5" />
-      </Button>
+      <DropdownMenu className="md:hidden">
+        <DropdownMenuTrigger className="md:hidden">
+          <HamburgerMenuIcon className="size-5" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={toggleSearchBox}>
+            <PlusIcon className="mr-2" /> Add People
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="relative"
+            onClick={toggleNotificationBox}
+          >
+            <BellIcon className="mr-2" />
+            <span
+              id="notification-count"
+              className="size-3 bg-destructive absolute top-[4px] left-[1px] rounded-full hidden"
+            ></span>
+            Notifications
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link to="/profile" className="">
+              <Avatar className="size-5 mr-1">
+                <AvatarImage src={user?.avtar} />
+                <AvatarFallback>{user.fullname.slice(0, 2)}</AvatarFallback>
+              </Avatar>
+            </Link>
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   );
 };
