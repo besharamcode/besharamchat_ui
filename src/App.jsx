@@ -27,14 +27,14 @@ function App() {
       ) : (
         <>
           <Toaster />
-          {window.location.pathname.startsWith("/home") ||
-            window.location.pathname.startsWith("/profile") ||
-            (window.location.pathname.startsWith("/chat") && (
-              <>
-                <Notification toast={toast} />
-                <SearchBox toast={toast} />
-              </>
-            ))}
+          {window.location.pathname.startsWith("/ho") ||
+          window.location.pathname.startsWith("/pro") ||
+          window.location.pathname.startsWith("/cha") ? (
+            <>
+              <Notification toast={toast} />
+              <SearchBox toast={toast} />
+            </>
+          ) : null}
           <BrowserRouter>
             <Routes>
               <Route

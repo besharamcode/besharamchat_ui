@@ -11,8 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { handleToggleNoticationBox, handleToggleSearchBox } from "@/lib/utils";
 
-const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
+const Header = () => {
   const { user } = useSelector((store) => store.user);
   return (
     <header
@@ -27,12 +28,12 @@ const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
       <nav className="md:block hidden">
         <ul className="flex justify-center items-center gap-3">
           <li className="size-8  flex justify-center items-center">
-            <Button onClick={toggleSearchBox}>
+            <Button onClick={handleToggleSearchBox}>
               <PlusIcon className="size-6" />
             </Button>
           </li>
           <li className="size-8 flex justify-center items-center mr-2 relative">
-            <Button onClick={toggleNotificationBox}>
+            <Button onClick={handleToggleNoticationBox}>
               <BellIcon className="size-6" />
               <span
                 id="notification-count"
@@ -56,12 +57,12 @@ const Header = ({ toggleSearchBox, toggleNotificationBox }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={toggleSearchBox}>
+          <DropdownMenuItem onClick={handleToggleSearchBox}>
             <PlusIcon className="mr-2" /> Add People
           </DropdownMenuItem>
           <DropdownMenuItem
             className="relative"
-            onClick={toggleNotificationBox}
+            onClick={handleToggleNoticationBox}
           >
             <BellIcon className="mr-2" />
             <span
