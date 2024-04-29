@@ -8,7 +8,6 @@ import { authFetchData, authUpdateData } from "@/lib/ApiFunctions";
 
 const Notification = ({ toast }) => {
   const { socket } = useSelector((store) => store.socket);
-  console.log(socket);
   const [request, setRequest] = useState([]);
 
   const getRequests = async () => {
@@ -84,7 +83,6 @@ const Notification = ({ toast }) => {
       <div className="h-[50vh] mt-4 overflow-y-auto">
         {request && request.length > 0 ? (
           request.map((request, i) => {
-            console.log(request);
             return (
               <div
                 className="flex items-center justify-between m-2 relative hover:bg-primary-foreground py-4 px-4 rounded-lg"
