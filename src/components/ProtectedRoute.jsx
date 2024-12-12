@@ -50,7 +50,7 @@ const ProtectedRoute = ({ children, toast }) => {
           if (!data.user.verified) {
             reverifyUser(data.user.email);
           } else {
-            const socket = io("https://besharamchat-server.onrender.com", {
+            const socket = io("https://besharamchat.myquizcode.com", {
               // const socket = io("http://localhost:8000", {
               query: {
                 userId: data.user._id,
